@@ -1,30 +1,25 @@
 import re
-
 from products_crawler.crawlers.base_crawler import BaseCrawler
 
 
 class CategoryCrawler(BaseCrawler):
     
     
-    def __init__(self,category_url,cookies=None):
-        super().__init__()
+    def __init__(self,category_url,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+
         self.category_url = category_url
         
-        if cookies:
-            self.r.cookies.update(cookies)
         
         
-    def crawl_now(self):
+    def _crawl_now(self):
         
         reps = self._get(self.category_url)
         tree = self.parser(reps.text)
 
         products = self._extract_products(tree)
         
-        return {
-            'cookies'   :self.r.cookies.get_dict(),
-            'products'  :products,
-        }
+        return products
     
     def _extract_products(self,tree):
         

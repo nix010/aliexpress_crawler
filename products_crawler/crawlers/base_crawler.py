@@ -14,12 +14,19 @@ class BaseCrawler(object):
     }
     _save_to_db = True
     
-    def __init__(self):
+    def __init__(self,*args,**kwargs):
         self.r = requests.Session()
+        if kwargs.get('cookies'):
+            self.r.cookies.update(kwargs['cookies'])
     
+    def _crawl_now(self):
+        return []
     
     def crawl_now(self):
-        return 'Completed'
+        return {
+            'cookies'   : self.r.cookies.get_dict(),
+            'data'      : self._crawl_now(),
+        }
     
     def _get(self, url, params=None, headers=None, cookies=None):
         if params is None:
