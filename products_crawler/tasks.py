@@ -26,6 +26,8 @@ def crawl_category(cate_id):
             url = cate.url
         print(url)
         cookie  = AliexpressCookie.objects.filter(state=AliexpressCookie.STATE_OK).first()
+        if not cookie:
+            return 'No-Cookie'
 
         res     = CategoryCrawler(url,cookies=cookie.cookies).crawl_now()
         
@@ -34,7 +36,7 @@ def crawl_category(cate_id):
             cookie.save()
     
         products = res['data']
-        print('save %d item(s)'%len(products))
+        print('Got %d item(s)'%len(products))
         for product in products:
             product.update({
                 'category':cate
@@ -54,14 +56,14 @@ def crawl_product_buyer(prod_id=None):
     from products_crawler.crawlers.transaction_crawler import TransactionCrawler
     from products_crawler.utils import search_lucky_buyer
 
-    cookie  = AliexpressCookie.objects.filter(state=AliexpressCookie.STATE_OK).first()
+    # cookie  = AliexpressCookie.objects.filter(state=AliexpressCookie.STATE_OK).first()
     product = Product.objects.get(id=prod_id)
     
     for i in range(1,11):
         res     = TransactionCrawler(
             trans_id    = product.product_id,
             page        = i,
-            cookies     = cookie.cookies,
+            # cookies     = cookie.cookies,
         ).crawl_now()
         
         buyers  = res['data']
