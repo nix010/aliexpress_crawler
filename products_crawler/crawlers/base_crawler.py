@@ -2,22 +2,23 @@ import json
 from bs4 import BeautifulSoup as BS
 
 import requests
+from requests.cookies import cookiejar_from_dict
 
 
 class BaseCrawler(object):
     
     default_headers = {
         'Accept'                    : '*/*',
-        'accept-encoding'           : 'gzip, deflate, br',
-        'accept-language'           : 'en-US,en;q=0.9,vi;q=0.8',
-        'user-agent'                : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.94 Chrome/62.0.3202.94 Safari/537.36'
+        'Cache-Control'             : 'no-cache',
+        'User-Agent'                : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.94 Chrome/62.0.3202.94 Safari/537.36'
     }
     _save_to_db = True
     
     def __init__(self,*args,**kwargs):
         self.r = requests.Session()
         if kwargs.get('cookies'):
-            self.r.cookies.update(kwargs['cookies'])
+            self.r.cookies = cookiejar_from_dict(kwargs.get('cookies'))
+            pass
     
     def _crawl_now(self):
         return []

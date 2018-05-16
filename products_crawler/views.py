@@ -109,6 +109,7 @@ class CookieView(TemplateView):
     def post(self, request, *args, **kwargs):
         
         cookie_text = request.POST.get('cookie')
+        print(cookie_text)
         if cookie_text:
             try:
                 cookie = parse_cookie_str(cookie_text)

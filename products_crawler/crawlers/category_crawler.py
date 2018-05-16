@@ -1,6 +1,7 @@
 import re
 
 import sys
+from pprint import pprint
 from random import randint
 
 from products_crawler.crawlers.base_crawler import BaseCrawler
@@ -11,12 +12,6 @@ class CategoryCrawler(BaseCrawler):
     
     def __init__(self,category_url,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        if randint(0,100) < 50:
-            self.default_headers.update({
-                'Cache-Control'            : 'no-cache',
-                'pragma'                   : 'no-cache',
-                'upgrade-insecure-requests': '1',
-            })
         self.category_url = category_url
         
         
@@ -24,12 +19,12 @@ class CategoryCrawler(BaseCrawler):
         
         reps = self._get(self.category_url)
         
-        print(reps.request.headers)
+        pprint(reps.request.headers)
         print(reps.request.url)
         
-        f = open('ali.html','w')
-        f.write(reps.text)
-        f.close()
+        # f = open('ali.html','w')
+        # f.write(reps.text)
+        # f.close()
         tree = self.parser(reps.text)
 
         products = self._extract_products(tree)
@@ -51,6 +46,9 @@ class CategoryCrawler(BaseCrawler):
                 order_count = re.findall('\((.*?)\)',order_count)[0]
                 store       = node.select_one('.store').getText().strip()
                 store_url   = node.select_one('a.store').get('href')
+                
+                if int(order_count) < 5:
+                    continue
             except Exception as e:
                 print('Error: %s'%e)
                 sys.exc_info()
