@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h1 class="ui header">Products list</h1>
+    <div class="ui grid " id="list">
+        {% include 'product/list_item.html' %}
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+    <script>
+      var bus = {
+        "page"      : 2,
+        "page_end"  : false,
+        "calling"   : false,
+        "by_cate"   : "{{ request.GET.by_cate }}",
+      };
+      $.ajaxSetup({
+        headers: { 'X-CSRFToken': "{{ csrf_token }}" }
+      });
+      $(window).scroll(function() {
+        if( !bus.page_end && ($(window).scrollTop() + screen.height) > $(document).height() - 100 ){
+          if (!bus.calling){
+            bus.calling = true;
+            $.ajax({
+              method: "GET",
+              url: '{% block ajax_url %}{% url 'product_list' %}?is_ajax=1{% endblock %}',
+              data: bus,
+              success: function(data){
+                bus.calling = false;
+                console.log('ok');
+                bus.page_end = data.page_end;
+                bus.page = bus.page+1;
+                console.log(data);
+                $('#list').append(data.html);
+              },
+              error:function (request, status, error) {
+                bus.calling = false;
+                console.log(error);
+                alert('Error ! Try again please', 'red','times');
+              }
+            });
+          }
+        }
+      });
+    </script>
+{% endblock %}

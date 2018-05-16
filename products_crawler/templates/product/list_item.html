@@ -1,0 +1,25 @@
+
+{% for product in products %}
+    <div class="ui card three wide column">
+        <div class="ui top attached label">{{ product.category }}</div>
+        <div class="image">
+            <img src="{{ product.image_url }}">
+        </div>
+        <div class="content">
+            <h6 class="header">[{{ product.id }}]<a href="{{ product.url }}">{{ product|truncatechars:25 }}
+            </a>
+            </h6>
+            <div class="meta">
+                By <a href="{{ product.store_url }}">{{ product.store_name|truncatechars:15 }} </a><hr>
+                <span class="price">$ {{ product.price }} - ({{ product.order_count }})</span>
+            </div>
+            <div class="description">
+                {{ product.created_at|date:'SHORT_DATETIME_FORMAT' }}
+            </div>
+
+        </div>
+        <div class="extra content">
+            <b>5 <i class="dolly flatbed icon"></i> :</b> {{ product.latest_buyer5.buyer_time|date:'SHORT_DATETIME_FORMAT' }}
+        </div>
+    </div>
+{% endfor %}

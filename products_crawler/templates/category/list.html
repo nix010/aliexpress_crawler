@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block scripts %}{% endblock %}
+
+{% block main %}
+    <h1 class="ui header">Category list</h1>
+    <div class="ui grid ">
+        <div class="ui divided list twelve wide column">
+            {% for category in categories %}
+                <div class="item">
+                    <div class="content">
+                        <h3 class="header">[{{ category.id }}] {{ category }} - <a href="{{ category.url }}">Link</a>
+                            <a href="{% url 'category_crawl' category_id=category.id %}" class="ui right floated green button">
+                                Scan now
+                                <i class="right chevron icon"></i>
+                            </a>
+                            <a href="{% url 'category_delete' category_id=category.id %}" class="ui right floated red button">
+                                Delete
+                                <i class="trash icon"></i>
+                            </a>
+                        </h3>
+                        <div class="description">
+                            {{ category.created_at }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="ui four wide column">
+            <div class="ui form">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label>Category url</label>
+                        <input type="text" name="category_url">
+                        <input type="submit" hidden>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

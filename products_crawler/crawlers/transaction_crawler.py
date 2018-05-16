@@ -15,7 +15,7 @@ class TransactionCrawler(BaseCrawler):
         
     def _crawl_now(self):
         
-        reps = self._get(self.API,params={
+        reps = self._get(self.API, params={
             'callback'  :'',
             'productId' :self.trans_id,
             'type'      :'default',
