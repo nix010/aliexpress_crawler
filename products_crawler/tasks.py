@@ -40,6 +40,11 @@ def crawl_category(cate_id):
             cookie.save()
     
         products = res['data']
+        if len(products) == 0:
+            print('\n================')
+            print('End with error ')
+            break
+            
         print('Got %d item(s)'%len(products))
         for product in products:
             product.update({
