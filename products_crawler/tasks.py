@@ -18,7 +18,7 @@ def crawl_category(cate_id):
 
     cate    = Category.objects.get(id=cate_id)
     
-    page_num = 1
+    page_num = 10
     for p in range(page_num):
         if p > 0:
             url = cate.url.replace('.html', '/%s.html' % str(p+1))
