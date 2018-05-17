@@ -1,5 +1,5 @@
 from datetime import timedelta
-
+import time
 from project.celery import app
 
 # app.conf.beat_schedule = {
@@ -23,6 +23,7 @@ def crawl_category(cate_id):
         if p > 0:
             url = cate.url.replace('.html', '/%s.html' % str(p+1))
         else:
+            time.sleep(7)
             url = cate.url
         print(url)
         cookie  = AliexpressCookie.objects.filter(state=AliexpressCookie.STATE_OK).first()
