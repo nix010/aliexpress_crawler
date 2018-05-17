@@ -3,7 +3,7 @@ from django.urls import path
 from products_crawler import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.product_view, name='home'),
     
     path('cookies/', views.cookies_view, name='cookie_list'),
     path('cookies/<int:cookie_id>/delete', views.CookieView.delete, name='cookie_delete'),
