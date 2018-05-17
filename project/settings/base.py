@@ -121,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
+STATIC_ROOT = 'static/'
 
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/2'
 CELERY_ACCEPT_CONTENT = ['json']
