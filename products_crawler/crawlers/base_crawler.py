@@ -10,6 +10,8 @@ class BaseCrawler(object):
     default_headers = {
         'Accept'                    : '*/*',
         'Cache-Control'             : 'no-cache',
+        'Pragma'                    : 'no-cache',
+        'upgrade-insecure-requests' : '1',
         'User-Agent'                : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.94 Chrome/62.0.3202.94 Safari/537.36'
     }
     _save_to_db = True

@@ -1,6 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 
 
 class BaseModel(models.Model):
@@ -32,6 +32,9 @@ class Category(BaseModel):
     name        = models.CharField(max_length=500)
     url         = models.CharField(max_length=1000)
 
+    def valid_product_set(self):
+        return self.product_set.all().annotate(lucky = Count('buyer', filter = Q(buyer__buyer_lucky=True)) )\
+            .filter(lucky__gte =1)
     
 class Product(BaseModel):
     
@@ -46,7 +49,6 @@ class Product(BaseModel):
     category    = models.ForeignKey(Category,on_delete=models.CASCADE)
     
     
-    
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         
         self.url        = 'https:'+self.url if self.url and self.url.startswith("//") else self.url
@@ -54,7 +56,7 @@ class Product(BaseModel):
         self.store_url  = 'https:'+self.store_url if self.store_url and self.store_url.startswith("//") else self.store_url
         super().save(force_insert=False, force_update=False, using=None,update_fields=None)
         
-    
+        
     def latest_buyer5(self):
         return self.buyer_set.all().filter(buyer_lucky=True).order_by('-buyer_time').first()
 

@@ -8,7 +8,7 @@
             {% for category in categories %}
                 <div class="item">
                     <div class="content">
-                        <h3 class="header">[{{ category.id }}] {{ category }} - <a href="{{ category.url }}">Link</a>
+                        <h3 class="header">[{{ category.id }}] <a href="{{ category.url }}">{{ category }}</a> - <a href="{% url 'product_list' %}?by_cate={{ category.id }}">{{ category.valid_product_set.count }} products</a>
                             <a href="{% url 'category_crawl' category_id=category.id %}" class="ui right floated green button">
                                 Scan now
                                 <i class="right chevron icon"></i>
