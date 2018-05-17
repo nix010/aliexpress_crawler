@@ -74,19 +74,20 @@ class ProductView(TemplateView):
     def get(self, request, *args, **kwargs):
         
         page = int(request.GET.get('page',1))
-        products = Product.objects.annotate(lucky_time=Max('buyer__buyer_time'),lucky = Count('buyer', filter = Q(buyer__buyer_lucky=True)) )\
-            .filter(lucky__gte =1)
+        products = Product.objects.annotate(lucky = Count('buyer', filter = Q(buyer__buyer_lucky=True)) )\
+            .filter(lucky__gte =1).annotate(lucky_time=Max('buyer__buyer_time'))
         
         
             
         if request.GET.get('by_cate'):
             products = products.filter(category__id=request.GET.get('by_cate'))
         
-        products = products.order_by('-updated_at')
         
         if request.GET.get('order_by'):
             products = products.order_by('-'+request.GET.get('order_by'))
-        
+        else:
+            products = products.order_by('-updated_at')
+
         products = _paginator(products, 10,page)
         context = {
             'products': products
