@@ -1,8 +1,24 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <h1 class="ui header">Products list</h1>
+    <div class="ui grid">
+        <h1 class="ui header four wide column">Products list</h1>
+        <div class="ui form twelve wide column ">
+            <div class="four fields">
+                <div class=" field">
+                    <label>Order by <i class="icon arrow down"></i></label>
+                    <select class="ui dropdown" id="order_by" onchange="location='?order_by='+this.value">
+                        <option value="" >[None]</option>
+                        <option value="order_count" {% if request.GET.order_by == 'order_count' %}selected{% endif %}>Orders Count</option>
+                        <option value="lucky_time" {% if request.GET.order_by == 'lucky_time' %}selected{% endif %}>Time 5 orders</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="ui grid " id="list">
+
         {% include 'product/list_item.html' %}
     </div>
 
@@ -15,6 +31,7 @@
         "page_end"  : false,
         "calling"   : false,
         "by_cate"   : "{{ request.GET.by_cate }}",
+        "order_by"  : "{{ request.GET.order_by }}",
       };
       $.ajaxSetup({
         headers: { 'X-CSRFToken': "{{ csrf_token }}" }

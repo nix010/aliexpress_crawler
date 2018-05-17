@@ -6,11 +6,11 @@
             <img src="{{ product.image_url }}">
         </div>
         <div class="content">
-            <h6 class="header">[{{ product.id }}]<a href="{{ product.url }}">{{ product|truncatechars:25 }}
+            <h6 class="header">[{{ product.id }}]<a target="_blank" href="{{ product.url }}">{{ product|truncatechars:25 }}
             </a>
             </h6>
             <div class="meta">
-                By <a href="{{ product.store_url }}">{{ product.store_name|truncatechars:15 }} </a><hr>
+                By <a target="_blank" href="{{ product.store_url }}">{{ product.store_name|truncatechars:15 }} </a><hr>
                 <span class="price">$ {{ product.price }} - ({{ product.order_count }})</span>
             </div>
             <div class="description">

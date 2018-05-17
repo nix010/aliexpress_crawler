@@ -18,6 +18,7 @@ class BaseCrawler(object):
     
     def __init__(self,*args,**kwargs):
         self.r = requests.Session()
+        
         if kwargs.get('cookies'):
             self.r.cookies = cookiejar_from_dict(kwargs.get('cookies'))
             pass

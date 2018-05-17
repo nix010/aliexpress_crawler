@@ -25,15 +25,14 @@ def crawl_category(cate_id):
         else:
             url = cate.url
             
-        print('::::sleep 7s')
-        time.sleep(7)
 
         print(url)
         cookie  = AliexpressCookie.objects.filter(state=AliexpressCookie.STATE_OK).first()
         if not cookie:
             return 'No-Cookie'
 
-        res     = CategoryCrawler(url,cookies=cookie.cookies).crawl_now()
+        # res     = CategoryCrawler(url,cookies=cookie.cookies).crawl_now()
+        res     = CategoryCrawler(url).crawl_now()
         
         if res.get('cookies'):
             cookie.cookies = res.get('cookies')

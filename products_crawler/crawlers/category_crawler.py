@@ -1,8 +1,7 @@
 import re
 
 import sys
-from pprint import pprint
-from random import randint
+import traceback
 
 from products_crawler.crawlers.base_crawler import BaseCrawler
 
@@ -12,6 +11,10 @@ class CategoryCrawler(BaseCrawler):
     
     def __init__(self,category_url,*args,**kwargs):
         super().__init__(*args,**kwargs)
+        self.r.proxies = {
+            'http' : 'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080',
+            'https': 'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080'
+        }
         self.category_url = category_url
         
         
@@ -19,7 +22,7 @@ class CategoryCrawler(BaseCrawler):
         
         reps = self._get(self.category_url)
         
-        pprint(reps.request.headers)
+        print(reps.request.headers)
         print(reps.request.url)
         
         # f = open('ali.html','w')
@@ -36,7 +39,13 @@ class CategoryCrawler(BaseCrawler):
         for node in tree.select('#list-items li'):
             # print(node)
             try:
-                id          = node.select_one('input.atc-product-id').get('value').strip()
+                id          = node.select_one('input.atc-product-id')
+                if not id:
+                    id = node.select_one('[data-product-id]').get('data-product-id')
+                else:
+                    id = id.get('value')
+                id          = id.strip()
+
                 url         = node.select_one('a.product')['href']
                 name        = node.select_one('a.product').getText().strip()
                 image_url   = node.select_one('img.picCore')
@@ -51,7 +60,8 @@ class CategoryCrawler(BaseCrawler):
                     continue
             except Exception as e:
                 print('Error: %s'%e)
-                sys.exc_info()
+                # traceback.print_tb(e.__traceback__)
+                # sys.exc_info()
                 continue
                 
             p = {

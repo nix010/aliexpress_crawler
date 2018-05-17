@@ -3,90 +3,35 @@ import requests
 from products_crawler.crawlers.category_crawler import CategoryCrawler
 from products_crawler.crawlers.transaction_crawler import TransactionCrawler
 from products_crawler.utils import parse_cookie_str
-from http import cookiejar  # Python 2: import cookielib as cookiejar
-class BlockAll(cookiejar.CookiePolicy):
-    
-    # return_ok = set_ok = domain_return_ok = path_return_ok = lambda self, *args, **kwargs: False
-    netscape = True
-    rfc2965 = hide_cookie2 = False
 
-    def set_ok(self, cookie, request):
-        return False
 import requests
 s = requests.Session()
-s.cookies.set_policy(BlockAll())
 # cookie = parse_cookie_str('ali_apache_id=11.227.118.141.1526012022212.196322.1; cna=BZhfEugJQwYCAbdQdies5exT; _ga=GA1.2.1603360291.1526012031; _uab_collina=152612787798485772062051; _gid=GA1.2.2062811205.1526236165; __utma=3375712.1603360291.1526012031.1526236353.1526236353.1; __utmz=3375712.1526236353.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); ali_beacon_id=11.227.118.141.1526012022212.196322.1; aep_common_f=AfY8lja5UMZl9FDy5rbguF/P7gSeAjHK6IuJbnyD82uHegi5XOGYxA==; intl_locale=en_US; _mle_tmp_harden0=COMyBPKnGxIg1PC5i8KdrwWzAMSTYaiYp2YmDvfssKImdc%2FmV6BBObpDdQ8TF0sDjL9D0tmM9zYIHkOkTyoihqbp6A%2B0Rec7jINry5Xkea6je75hAxKruE9MKwz7HM9F; _umdata=428F97F4B1282F4E8AC86D579EEA80802B7EDD5DFFE13C1F58104AE993D12B4DB45E631225AEE061CD43AD3E795C914C6006F0B97FA9219221322A4410F44EE1; aep_history=keywords%5E%0Akeywords%09%0A%0Aproduct_selloffer%5E%0Aproduct_selloffer%0932854134267%0932826062424%0932855909405%0932848645038; _hvn_login=13; aep_usuc_t=ber_l=A0; xman_f=OJsTTTSZnXcfe87aKOex+YZ/E0rwhJ+mMfaQBTFQLTLTRIEN0/7BiqwPrZcygTsPmdNRumcEuUOfyxy49cdKOY/wcetJFr5F5XhKtzaWPqwKuQNGEw/ZVhh0iE9vN0Jg8n8SA3Sq13qJ+JV5VK1zSscZzOmjfB2PCzZ/KY+c+RzhdAAcG11xAwU25tPBT3qoFMdrUJtSGbiQ+RSJ/PyzuVBvmbqIHopWjyg8LIQco1HTx/3+VJXkKlw/6Y9ANhdEiK9lbDSe8CkGi9aUcka+tk82YBzYNqEALHugg/PaWoVEmIS8FDbeniDMnnhgLj171xZVtweQYHcPF5LLhj8eCoheVolvOyvKlLJPkofKRYTyK961f0mCX77Kja9MAB2K3eu4Hhg4hKlIFk9ZqO15lZyrtR52qeJVMpMsrxw8ktc=; xman_t=G49n7tq5+UwM+5FZaP16E79ig0edGApaYgRGWfuMnCGyjyISXlxIFzPZ9fE6mNVX; acs_usuc_t=x_csrf=1n20z0qtfm35e&acs_rt=9e8229d34aba4a50b195e1db24452611; JSESSIONID=52A8A8CC7181A164F8B9CAF3049F7633; xman_us_f=x_l=1&x_locale=en_US&no_popup_today=n&x_user=VN|Nix|Grave|ifm|1766821924&zero_order=y&last_popup_time=1526236636895; _mle_tmp0=iiCGajxLJhPRfqiVFROq8nIkdZAZr3NpAV27Mg%2Bjb4iWLxb%2BM3c4hzLNLUuiZR%2BeF7uKbG9ne8FfVqmdvggfpaKbJ69V5wyaRFprbYs%2BXBEw7Oc1WwQYpLizd1LYZ7h2; aep_usuc_f=site=glo_v&region=US&b_locale=en_US&isb=y&c_tp=USD&x_alimid=1766821924; intl_common_forever=AcrTmUCalF4/PW1+BZ7wd5/emwh4c83wrF9Aa3sdTIhg6h938Yoprw==; ali_apache_track=mt=1|mid=vn164933924mouae; ali_apache_tracktmp=W_signed=Y; isg=BLW1YoX1A47NtWc9v_YeAFVyxDivmmhMx2a99zfaQyx1DtQA_4d5FexMXMo4ToH8')
-res = s.get('https://www.aliexpress.com/category/200000775/jackets-coats.html')
-# TransactionCrawler(trans_id='32848645038',page=1,cookies=cookie).crawl_now()
+# res = s.post('https://passport.aliexpress.com/newlogin/login.do',
+#             headers={
+#                 'Accept'                    : '*/*',
+#                 'Cache-Control'             : 'no-cache',
+#                 'Pragma'                    : 'no-cache',
+#                 'upgrade-insecure-requests' : '1',
+#                 'Content-Type'              : 'application/x-www-form-urlencoded; charset=UTF-8',
+#                 'User-Agent'                : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.94 Chrome/62.0.3202.94 Safari/537.36'
+#             },data='loginId=stricker.reno%40gmail.com&password2=320f2b99e8af00643e72116889613109055e4292cf4eb6f6c62ab659050ad6b7d53e04977b4da228b8692966bc7e8bae070d8e9cf8c9a1fa2d0954240614b261a99aa090cc1a892d49d4568ecf9dde0284d0c07027fe44a3d36835bc968e0dbab0d13b190e8b856a11ef4b38e43c0abb3900fdadfbb6f1cf424e8337464fa431&checkCode=&appName=aebuyer&appEntrance=default&bizParams=&ua=108%23fqb%2F1%2FR2%2FYpfq3GtcpuwDWExxUlncLd8nA3JIfl%2F6BM5%2FcdAPWr12ZkYFBRH0fraPi9Gmif101cUCl9p905rcSy7HPa%2FZ%2FWs4%2FKUSE81eY9TUZPEIKknxLUBIBERtTxfkyHrkDDLX%2FLTeIzDuI3XBSnyyof35w48JE8H15bUbLiBErKYojDWOdisvT%2Bt7NTezOw2mJDp1HF724YqcWmDS0pFgSTJRuchjnU9gkjoTVEeIt3xA4yDFNRcAZWtNnNOu9WMNJvZfaECUWos5K8qThE%2B0nALhEDu6PoIp3UEM6SUygRz8iVEhFfU4vy2WPr8G76WVasipr9aymENKL5AkemQcAasAKGctp4zviw9NGGMlyhgvm2cHFB4FMewwjc9o6KCQUn7idmKLfvDvXj6BALqipFJl1%2BwnWvgbkHwEjW9SmOCxDq88E%2Fiuzbv%2F7ls0hwKYmySc6MCv4gkeiNLDkdbneXEIGUK3YOpDdQfJiuQKRF4hu%2FS5jwF9jVDIdlGJSLVQoRhs3XWgPvT9YpuckZBX7DIM9wSZFeZpZbvqo8o2wOEwBXcDSQG9WfJn4lxm1MBxo1ZF%2FMzPELEznhRs1KieeBaDvDbbkjdFt7SeEVfg1CgRLXWLCO0dud0TAlwAENmw%2FVJ57FLCUoTGlbK%2BVb177ukOD%2B0H81M5y8yuXnvRGKxCxCPbtz%2B9WuFMab5fS8hgClb4f40EBHcZ1pfWvNuqxgt%2FYceH7ueSt3qT3WZQoJiw90BkE77G1Cr5IIuzT89P9zvI0ui%2FP%2BtUsyuIU1LiErexrsJXaYK2ci7ErIDAwq9ZlQxqEhBMJMIGdXf1rdwfVaBawho3wSB1zTdIDpwrq9zrmYgmsK%2BLGcZElzEQc6ppFgg6wCV2ClGgXCq2s5RnbR3QMXRrqkojotuXwHjeSH4Xo6XBceM1GspxSD69yj8TE4ZyQ71vA%2FmUs5Kn8RPVt2Emp3zAEg3wThZ%2ByqqY0iARGcDqGbGTMLOfiDbfIiqt%2Bqm&hsid=bS6LFQEdyxC6V3F4erLXIw&rdsToken=&umidToken=c1c76c807224aee6da11c686c2feb4fe5bb4fce7&isRequiresHasTimeout=false&isRDSReady=true&isUMIDReady=true&umidGetStatusVal=255&lrfcf=&lang=en_US&scene=&isMobile=false&screenPixel=1920x1080&navlanguage=en-US&navUserAgent=Mozilla%2F5.0+(X11%3B+Linux+x86_64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Ubuntu+Chromium%2F63.0.3239.84+Chrome%2F63.0.3239.84+Safari%2F537.36&navAppVersion=&navPlatform=Linux+x86_64&token=&nocAppKey=&csessionid=&sig=&captchaToken=&_csrf_token=VncluqFNpRT9YVRSJ0LRE')
+#
+# print(res.json())
 
-# print (res.request.headers)
-for x in res.history:
-    print('----------------')
-    print(x.request.headers)
-    print(x.request.url)
+res = s.get('https://www.aliexpress.com/category/100003070/men-clothing-accessories.html',headers={
+    'Accept'                    : '*/*',
+    'Cache-Control'             : 'no-cache',
+    'Pragma'                    : 'no-cache',
+    'upgrade-insecure-requests' : '1',
+    'User-Agent'                : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.94 Chrome/62.0.3202.94 Safari/537.36'
+},proxies={
+    'http':'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080',
+    'https':'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080'
+}
+            )
 
-"""
 
-JSESSIONID=588B9B2E3E3978BCE66E72C392DC5458
-__utma=3375712.1603360291.1526012031.1526236353.1526236353.1
-__utmz=3375712.1526236353.1.1.utmcsr
-_ga=GA1.2.1603360291.1526012031
-_gid=GA1.2.2062811205.1526236165
-_hvn_login=13
-_mle_tmp0=iiCGajxLJhPRfqiVFROq8ndP19Thrc16Kmf8D25B30fnWeKq%2BvDPukp0GA1bXvixRW0l7RrUCrcV4zk6Y9hJB%2F%2BfVluv9E0jWK5BKu7lekd2B7lBPtdby7WliOLN9hJ%2F
-_mle_tmp_harden0=COMyBPKnGxIg1PC5i8KdrzyjQ0%2BPP2dXv6w%2FEdP%2FWRTQ5r9zpbE7od%2BiH2ciPIUSmHvtPKz5cE0S8kdXxaWLbeMKakukiO0xeC4VGk06ioJBWMdlGc%2FtOw0Gqj72VXun
-_uab_collina=152612787798485772062051
-_umdata=428F97F4B1282F4E8AC86D579EEA80802B7EDD5DFFE13C1F58104AE993D12B4DB45E631225AEE061CD43AD3E795C914CCD84116AFEA4E62F9D3C93CA3E9D3411
-acs_usuc_t=acs_rt
-aep_common_f=AfY8lja5UMZl9FDy5rbguF/P7gSeAjHK6IuJbnyD82uHegi5XOGYxA
-aep_history=keywords%5E%0Akeywords%09%0A%0Aproduct_selloffer%5E%0Aproduct_selloffer%0932854134267%0932826062424%0932855909405%0932848645038%0932651825183%0932633561482
-aep_usuc_f=site
-aep_usuc_t=ber_l
-ali_apache_id=11.227.118.141.1526012022212.196322.1
-ali_apache_track=mt
-ali_apache_tracktmp=
-ali_beacon_id=11.227.118.141.1526012022212.196322.1
-cna=BZhfEugJQwYCAbdQdies5exT
-intl_common_forever=+4uia3bupLBHrY7ilwa6LYb/NO0VuVHUE6IXE72j9AdH8brmxj0qYg
-intl_locale=en_US
-isg=BObmTODjgI21jFQgGIP9JaoPN1WobyuJCIuuitCPyInkU4ZtOFd6kcwpr1dfeyKZ
-xman_f=0p1xw7CRWQc6KLzz8zgDLdZ2lTn20M/PEwX2kO80O6jg2ngpkZBVE5KEV1d2geutr3WwsxmWJgKm+aKyjNBIfIXNF8IgWUGwa8qnuRTCNDo0hZrU2VL/uo4XQXYL6XExCSFzSpih+S+IaTMGutKlfUFyISo5Eg/vgFXp7wgx8X0UiVI3kXt9i8feLdB7q1krBHKudDdHsLN8If2czSuOXr3tzSQdgNJ3tcX0tmxLQh8Hvp8sLa5GC3CwJbB61Qe8yz70FHMFeNxdp5YPoQv3oTLEf8VaGgk/iSU/L5qey/q1AGaTtybUA2Tcnss83CwjXqA3N52lBELbyMyoBEf/fFCnx0/DhKsLbZ+6XZBVxsXB+Xd8NzB63tDcdCdrAKGAlhnyJNF4lRYEeLspn2t38oH30SMzHSdZyF/W/y4WeE4
-xman_t=nh2im00nInss/qxXLFvtj9eGaIrgV2cKfQdBKr4vObFYSzTZd9gcDzom5SgNgn66a0rjv0z9tjWQTkD13uos5PWz1J4bkMAZSC69LbQBMyJyMBkG9X6MUCWAt+oxjuCuF2QZur2uZkj6Plyt8OsxG728J7vcDQPUIE2SLQfRy9yUEDfeWUAEzPbaHCTtiaGdTQli5ARu6KsCTjxKFUrKGp52zX7JT6vjUNfsX8qKb7Ynaq8FEapes51dEXT7V8Wf2ja0pKvkI7mP8ac7re5PzInHaEpW7iBlzZfFZbxMVancVJQ4uahzruQtim4As5PSUrcOesPLBnskM13GTtlXSIXzdAVYsUY8WgMyomp7x0FdvKk7CAYzvRZKAjDKhLP/eqsI8BI50NSEp5dCKxOQHlS8av/z75tSI31WQ8GxBv7SmbIpjfAOPLRacT6bmH+OSWxEwm62HjG9NWJtpkZ913uNegb6tKwiDYVwC1x0F9ggBBH+XE5MWh6K5LbjctFkI8R4XyqrH7ivhGAs6xG5zoh4FsaucI4YB5ZIvt1pL2xFLAH9RynczjU/e35A5t09Lc7GyVdc+kziMNAL5l87mmbgkU6CB8nuhdARDiAf12wgr4LIymCVe+ooi0vNf0goLO06GTSV+aA
-xman_us_f=x_l
-xman_us_t=x_lid
-xman_us_f=x_l
-aep_usuc_f=site
-acs_usuc_t=acs_rt=95529f0986ae48daaa8aee23fb2180b8&x_csrf=mcgra6y7rmbs
-xman_t=hw4NZhJqY9bwEoX9tsdQMOCWiSQBzt6fQmG260QqZ5FxxFzmhY40QRuHDWkpSmVdW6Bi3IUuiHSycaJnbtfgPhIuWFVcqS8NOTvrIGc6+Peoa5PDAkmBJHmlvUGkqjOaHJGIxeOYo9btFqyRrYmlD0uLpzjZz7fovKYisj6ioeTILkQiQoCavfH+AiU8t/Gm/237v3eDMOvPnlWkYF6Dwjr364Vhwi70X9+fQfDiLECQiP1It2XTUEgwe1UI3/wtub8ivyAvdWG1uIre8l6xZTTX/2bYDk2b4Z12MsUOzST+C2B56DPnGDEoeN7PM58TVBBHTEIcHy/88uHk6XbafTLnAHF/hxTiDriAnZOeJ3v6DKRf0DUktWHlvDpF0eyro1y5wDTAUCpl3uq0J8pSjfx+rvodcOC/B04pk9cmwPyCEFvnGUrKrtpx+hkGKMTM/e12VfOsRsVAcKGMfB6iPEAuVki+wl/PmErXecSJjIs9Pbq0wgSeYd1Jbpr8q89sRJFMMP3ytEdriuUt1IuLnB1gqJfgbWCeCl+Yfq2hPX5XArU1DhaAQhUkQM2ivl/1hAwCwFzM76GItja/M4vkf3DM3ONv6gHFZLbDA2RMwSGy3vlJg8yNK1icRHlHjOaarmxNOkK5Se8=
-intl_locale=en_US
-intl_common_forever=9CTwJs+3636Xc8rkk4gVxOTxxBWbyEgrHWGjWwb/7Z5g0G/xTX7+fA==
+print(res.request.headers)
+print(res.text[:550])
 
-ali_apache_id=11.227.118.141.1526012022212.196322.1
-cna=BZhfEugJQwYCAbdQdies5exT
-_ga=GA1.2.1603360291.1526012031
-_uab_collina=152612787798485772062051
-_gid=GA1.2.2062811205.1526236165
-__utma=3375712.1603360291.1526012031.1526236353.1526236353.1
-__utmz=3375712.1526236353.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)
-ali_beacon_id=11.227.118.141.1526012022212.196322.1
-aep_common_f=AfY8lja5UMZl9FDy5rbguF/P7gSeAjHK6IuJbnyD82uHegi5XOGYxA==
-intl_locale=en_US
-_umdata=428F97F4B1282F4E8AC86D579EEA80802B7EDD5DFFE13C1F58104AE993D12B4DB45E631225AEE061CD43AD3E795C914CCD84116AFEA4E62F9D3C93CA3E9D3411
-acs_usuc_t=acs_rt=c47f53f2f8504eb8b7c82e39b406bb5b&x_csrf=mcgra6y7rmbs
-_mle_tmp_harden0=COMyBPKnGxIg1PC5i8KdrzyjQ0%2BPP2dXv6w%2FEdP%2FWRTQ5r9zpbE7od%2BiH2ciPIUSmHvtPKz5cE0S8kdXxaWLbeMKakukiO0xeC4VGk06ioJBWMdlGc%2FtOw0Gqj72VXun
-aep_history=keywords%5E%0Akeywords%09%0A%0Aproduct_selloffer%5E%0Aproduct_selloffer%0932854134267%0932826062424%0932855909405%0932848645038%0932651825183%0932633561482
-JSESSIONID=588B9B2E3E3978BCE66E72C392DC5458
-xman_us_f=x_l=1&x_locale=en_US&no_popup_today=n&x_user=VN|Nix|Grave|ifm|1766821924&zero_order=y&last_popup_time=1526236636895
-_mle_tmp0=iiCGajxLJhPRfqiVFROq8ndP19Thrc16Kmf8D25B30fnWeKq%2BvDPukp0GA1bXvixRW0l7RrUCrcV4zk6Y9hJB%2F%2BfVluv9E0jWK5BKu7lekd2B7lBPtdby7WliOLN9hJ%2F
-_hvn_login=13
-xman_us_t=x_lid=vn164933924mouae&sign=y&x_user=U6U95WfWlLecb4bIhczTGwmkFEHwOAAFBAhj+IxS59c=&ctoken=7hnpnye13c0a&need_popup=y&l_source=aliexpress
-aep_usuc_t=ber_l=A0
-xman_f=0p1xw7CRWQc6KLzz8zgDLdZ2lTn20M/PEwX2kO80O6jg2ngpkZBVE5KEV1d2geutr3WwsxmWJgKm+aKyjNBIfIXNF8IgWUGwa8qnuRTCNDo0hZrU2VL/uo4XQXYL6XExCSFzSpih+S+IaTMGutKlfUFyISo5Eg/vgFXp7wgx8X0UiVI3kXt9i8feLdB7q1krBHKudDdHsLN8If2czSuOXr3tzSQdgNJ3tcX0tmxLQh8Hvp8sLa5GC3CwJbB61Qe8yz70FHMFeNxdp5YPoQv3oTLEf8VaGgk/iSU/L5qey/q1AGaTtybUA2Tcnss83CwjXqA3N52lBELbyMyoBEf/fFCnx0/DhKsLbZ+6XZBVxsXB+Xd8NzB63tDcdCdrAKGAlhnyJNF4lRYEeLspn2t38oH30SMzHSdZyF/W/y4WeE4=
-aep_usuc_f=region=US&site=glo_v&b_locale=en_US&isb=y&x_alimid=1766821924&c_tp=USD
-intl_common_forever=QBxlLT6XPgpcy6gD0z00LZ/oNLzrhg04bJfuHFhfVwfvFu6kDYdDXw==
-ali_apache_track=mt=1|ms=|mid=vn164933924mouae
-ali_apache_tracktmp=W_signed=Y
-isg=BDU14RcIgwi66ee9P3aegNXyRLgvGujMR-Y9d7da8Kz7jlWAfwL5lEMM3Eq4zgF8
-xman_t=2WbVysu9PwHcavneCiDxfT0gSGAGTaJKw6fMFtsd7F6kA2AHVNlaQ12VsRY0PdjYHdyiO9Sh2+2byEd0GfW2au5fqmLEhKVF4lD5ahWfniM1+lrv8nXWxNO6uG3GbIR2pHMep0RBXTxaimZcJ1f5/uEqNC8Uky3h/QhcbzrHB2POyZF9TveOj43vpzIfYurTpB/IxxvHuBHasau8XhLa+pqNRqMA9wwY8QWf+aKSfKUZJwgWdlu09cesHHfPJPLbQYPFTjvYSXeTNKZvw+40LmYhhukcgO49LiVapF6P5CstsO0LMeekiSrY6TVzWC9x8Vov4az+5tO2lz9EJ7QnDzY5GGrpKK5NQYAOUyC+gkEazuAKbBiBA8RgzpgDaiog7VbcBx4cbz1uYyQJFvGK5aL5HikHaXft0IiCre81Rk2gQ0mKasP3J8pp+ktO0LcvrwTk6Eacq9CEYv7ItHNfTqkiOnXQv3xELL6B1AIhu4ATs3D7c7QVMgl1R7m5ba54pgtXYD/EjO/IekbXirf1jajwDJD4iLmohqgDO/CLx5/c/ky2UAgDwfz2Ow1EKuLmbw/9eeXXqIy1f315nqyheCaLlJk44mue+U7Uy+e345BmxPxRErk91104c8UaZ2F7o8UXoFj0hNM=
-
-"""
