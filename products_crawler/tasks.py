@@ -23,9 +23,11 @@ def crawl_category(cate_id):
         if p > 0:
             url = cate.url.replace('.html', '/%s.html' % str(p+1))
         else:
-            print('::::sleep 7s')
-            time.sleep(7)
             url = cate.url
+            
+        print('::::sleep 7s')
+        time.sleep(7)
+
         print(url)
         cookie  = AliexpressCookie.objects.filter(state=AliexpressCookie.STATE_OK).first()
         if not cookie:
