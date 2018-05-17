@@ -1,4 +1,4 @@
-
+{% load humanize %}
 {% for product in products %}
     <div class="ui card three wide column">
         <div class="ui top attached label">{{ product.category }}</div>
@@ -14,7 +14,7 @@
                 <span class="price">$ {{ product.price }} - ({{ product.order_count }})</span>
             </div>
             <div class="description">
-                {{ product.created_at|date:'SHORT_DATETIME_FORMAT' }}
+                {{ product.updated_at|naturaltime }}
             </div>
 
         </div>
