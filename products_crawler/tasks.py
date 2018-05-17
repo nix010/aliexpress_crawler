@@ -2,15 +2,28 @@ from datetime import timedelta
 import time
 from project.celery import app
 
-# app.conf.beat_schedule = {
-    # 'update_shopify_site_schedule': {
-    #     'task': 'shopify_sites.tasks.update_shopify_site',
-    #     'schedule': 2*60*60,
-    # },
-# }
+app.conf.beat_schedule = {
+    'update_aliexpress_category': {
+        'task': 'product_crawler.tasks.update_categories',
+        'schedule': 8*60*60,
+    },
+}
+
 
 @app.task
-def crawl_category(cate_id):
+def update_categories():
+    from products_crawler.models import Category
+    from django.db.models import Count
+    cates = Category.objects.all().annotate(product_count=Count('product')).order_by('-product_count')
+    
+    for cate in cates:
+        crawl_category.delay(cate.id,30)
+    
+    
+@app.task
+def crawl_category(cate_id,sleep_time=0):
+    
+    time.sleep(sleep_time)
     
     from products_crawler.models import Product,Category,AliexpressCookie
 
