@@ -23,6 +23,7 @@ def crawl_category(cate_id):
         if p > 0:
             url = cate.url.replace('.html', '/%s.html' % str(p+1))
         else:
+            print('::::sleep 7s')
             time.sleep(7)
             url = cate.url
         print(url)
