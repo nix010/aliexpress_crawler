@@ -13,7 +13,7 @@
                                 Scan now
                                 <i class="right chevron icon"></i>
                             </a>
-                            <a href="{% url 'category_delete' category_id=category.id %}" class="ui right floated red button">
+                            <a onclick="return confirm('Are you sure?')"  href="{% url 'category_delete' category_id=category.id %}" class="ui right floated red button">
                                 Delete
                                 <i class="trash icon"></i>
                             </a>
