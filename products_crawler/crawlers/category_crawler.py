@@ -36,7 +36,10 @@ class CategoryCrawler(BaseCrawler):
     def _extract_products(self,tree):
         
         products = []
-        for node in tree.select('#list-items li'):
+        nodes = tree.select('#list-items li')
+        if not nodes:
+            nodes = tree.select('#hs-list-items li')
+        for node in nodes:
             # print(node)
             try:
                 id          = node.select_one('input.atc-product-id')

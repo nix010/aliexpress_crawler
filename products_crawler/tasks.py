@@ -5,7 +5,7 @@ from project.celery import app
 app.conf.beat_schedule = {
     'update_aliexpress_category': {
         'task': 'product_crawler.tasks.update_categories',
-        'schedule': 5*60*60,
+        'schedule': 60*60,
     },
 }
 
