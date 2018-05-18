@@ -49,4 +49,4 @@ def search_lucky_buyer(buyers):
             if time_list[0] - time_list[4] <= timedelta(hours=1):
                 return buyer['buyer_name']
             
-    return False
+    return None

@@ -74,8 +74,9 @@ class ProductView(TemplateView):
     def get(self, request, *args, **kwargs):
         
         page = int(request.GET.get('page',1))
-        products = Product.objects.annotate(lucky = Count('buyer', filter = Q(buyer__buyer_lucky=True)) )\
-            .filter(lucky__gte =1).annotate(lucky_time=Max('buyer__buyer_time'))
+        products = Product.objects\
+            .annotate(lucky = Count('buyer', filter = Q(buyer__buyer_lucky=True)) )\
+            .filter(lucky__gte =1).annotate(lucky_time=Max('buyer__buyer_time', filter = Q(buyer__buyer_lucky=True)))
         
         
             
