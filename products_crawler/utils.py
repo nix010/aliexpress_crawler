@@ -39,13 +39,19 @@ def search_lucky_buyer(buyers):
     _buyers = buyers
     time_dict = {}
     for buyer in _buyers:
+        
         if buyer['buyer_name'] in time_dict:
+        
             time_dict[buyer['buyer_name']].append(buyer['buyer_time'])
+        
         else:
+        
             time_dict[buyer['buyer_name']] = [buyer['buyer_time']]
         
         if len(time_dict[buyer['buyer_name']]) >= 5:
-            time_list = sorted(time_dict[buyer['buyer_name']])
+            
+            time_list = sorted(time_dict[buyer['buyer_name']],reverse=True)
+            
             if time_list[0] - time_list[4] <= timedelta(hours=1):
                 return buyer['buyer_name']
             
