@@ -1,8 +1,7 @@
+import random
 import re
 
-import sys
-import traceback
-
+from products_crawler.crawlers.proxies import PROXY_LIST
 from products_crawler.crawlers.base_crawler import BaseCrawler
 
 
@@ -11,9 +10,12 @@ class CategoryCrawler(BaseCrawler):
     
     def __init__(self,category_url,*args,**kwargs):
         super().__init__(*args,**kwargs)
+        
+        proxy = random.choice(PROXY_LIST)
+        
         self.r.proxies = {
-            'http' : 'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080',
-            'https': 'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080'
+            'http' : 'http://'+proxy,
+            'https': 'https://'+proxy
         }
         self.category_url = category_url
         

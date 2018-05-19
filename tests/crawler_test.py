@@ -1,8 +1,4 @@
-import requests
 
-from products_crawler.crawlers.category_crawler import CategoryCrawler
-from products_crawler.crawlers.transaction_crawler import TransactionCrawler
-from products_crawler.utils import parse_cookie_str
 
 import requests
 s = requests.Session()
@@ -18,7 +14,8 @@ s = requests.Session()
 #             },data='loginId=stricker.reno%40gmail.com&password2=320f2b99e8af00643e72116889613109055e4292cf4eb6f6c62ab659050ad6b7d53e04977b4da228b8692966bc7e8bae070d8e9cf8c9a1fa2d0954240614b261a99aa090cc1a892d49d4568ecf9dde0284d0c07027fe44a3d36835bc968e0dbab0d13b190e8b856a11ef4b38e43c0abb3900fdadfbb6f1cf424e8337464fa431&checkCode=&appName=aebuyer&appEntrance=default&bizParams=&ua=108%23fqb%2F1%2FR2%2FYpfq3GtcpuwDWExxUlncLd8nA3JIfl%2F6BM5%2FcdAPWr12ZkYFBRH0fraPi9Gmif101cUCl9p905rcSy7HPa%2FZ%2FWs4%2FKUSE81eY9TUZPEIKknxLUBIBERtTxfkyHrkDDLX%2FLTeIzDuI3XBSnyyof35w48JE8H15bUbLiBErKYojDWOdisvT%2Bt7NTezOw2mJDp1HF724YqcWmDS0pFgSTJRuchjnU9gkjoTVEeIt3xA4yDFNRcAZWtNnNOu9WMNJvZfaECUWos5K8qThE%2B0nALhEDu6PoIp3UEM6SUygRz8iVEhFfU4vy2WPr8G76WVasipr9aymENKL5AkemQcAasAKGctp4zviw9NGGMlyhgvm2cHFB4FMewwjc9o6KCQUn7idmKLfvDvXj6BALqipFJl1%2BwnWvgbkHwEjW9SmOCxDq88E%2Fiuzbv%2F7ls0hwKYmySc6MCv4gkeiNLDkdbneXEIGUK3YOpDdQfJiuQKRF4hu%2FS5jwF9jVDIdlGJSLVQoRhs3XWgPvT9YpuckZBX7DIM9wSZFeZpZbvqo8o2wOEwBXcDSQG9WfJn4lxm1MBxo1ZF%2FMzPELEznhRs1KieeBaDvDbbkjdFt7SeEVfg1CgRLXWLCO0dud0TAlwAENmw%2FVJ57FLCUoTGlbK%2BVb177ukOD%2B0H81M5y8yuXnvRGKxCxCPbtz%2B9WuFMab5fS8hgClb4f40EBHcZ1pfWvNuqxgt%2FYceH7ueSt3qT3WZQoJiw90BkE77G1Cr5IIuzT89P9zvI0ui%2FP%2BtUsyuIU1LiErexrsJXaYK2ci7ErIDAwq9ZlQxqEhBMJMIGdXf1rdwfVaBawho3wSB1zTdIDpwrq9zrmYgmsK%2BLGcZElzEQc6ppFgg6wCV2ClGgXCq2s5RnbR3QMXRrqkojotuXwHjeSH4Xo6XBceM1GspxSD69yj8TE4ZyQ71vA%2FmUs5Kn8RPVt2Emp3zAEg3wThZ%2ByqqY0iARGcDqGbGTMLOfiDbfIiqt%2Bqm&hsid=bS6LFQEdyxC6V3F4erLXIw&rdsToken=&umidToken=c1c76c807224aee6da11c686c2feb4fe5bb4fce7&isRequiresHasTimeout=false&isRDSReady=true&isUMIDReady=true&umidGetStatusVal=255&lrfcf=&lang=en_US&scene=&isMobile=false&screenPixel=1920x1080&navlanguage=en-US&navUserAgent=Mozilla%2F5.0+(X11%3B+Linux+x86_64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Ubuntu+Chromium%2F63.0.3239.84+Chrome%2F63.0.3239.84+Safari%2F537.36&navAppVersion=&navPlatform=Linux+x86_64&token=&nocAppKey=&csessionid=&sig=&captchaToken=&_csrf_token=VncluqFNpRT9YVRSJ0LRE')
 #
 # print(res.json())
-
+from products_crawler.crawlers.proxies import PROXY_LIST
+proxies = PROXY_LIST[2]
 res = s.get('https://www.aliexpress.com/category/100003070/men-clothing-accessories.html',headers={
     'Accept'                    : '*/*',
     'Cache-Control'             : 'no-cache',
@@ -26,8 +23,8 @@ res = s.get('https://www.aliexpress.com/category/100003070/men-clothing-accessor
     'upgrade-insecure-requests' : '1',
     'User-Agent'                : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.94 Chrome/62.0.3202.94 Safari/537.36'
 },proxies={
-    'http':'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080',
-    'https':'socks5://x4126276:N3qv87Ven8@proxy-nl.privateinternetaccess.com:1080'
+    'http':'http://'+proxies,
+    'https':'https://'+proxies
 }
             )
 
