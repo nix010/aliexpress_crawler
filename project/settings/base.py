@@ -124,6 +124,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 
+LOGIN_URL = '/login'
+
+
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/2'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'

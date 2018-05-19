@@ -1,3 +1,6 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Max
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -13,7 +16,27 @@ from products_crawler.utils import parse_cookie_str, get_aliexpress_category_nam
 def home(request):
     return render(request,'base.html')
 
+class LoginView(TemplateView):
 
+    template_name = 'login.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.add_message(request, messages.SUCCESS, 'Logged in')
+            return redirect(request.GET.get('next', '/'))
+        return redirect(login_view)
+
+login_view = LoginView.as_view()
 
 class CategoryView(TemplateView):
     
@@ -57,7 +80,7 @@ class CategoryView(TemplateView):
         crawl_category.delay(category_id)
         return redirect(category_view)
 
-category_view = CategoryView.as_view()
+category_view = login_required(CategoryView.as_view())
 
 
 class ProductView(TemplateView):
@@ -100,7 +123,7 @@ class ProductView(TemplateView):
         return self.render_to_response(context=context)
     
     
-product_view = ProductView.as_view()
+product_view = login_required(ProductView.as_view())
 
 
 class CookieView(TemplateView):
@@ -136,4 +159,4 @@ class CookieView(TemplateView):
             AliexpressCookie.objects.filter(id=cookie_id).delete()
         return redirect(cookies_view)
 
-cookies_view = CookieView.as_view()
+cookies_view = login_required(CookieView.as_view())

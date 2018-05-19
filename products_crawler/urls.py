@@ -4,6 +4,7 @@ from products_crawler import views
 
 urlpatterns = [
     path('', views.product_view, name='home'),
+    path('login/', views.login_view, name='login'),
     
     path('cookies/', views.cookies_view, name='cookie_list'),
     path('cookies/<int:cookie_id>/delete', views.CookieView.delete, name='cookie_delete'),
