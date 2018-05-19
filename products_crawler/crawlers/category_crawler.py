@@ -12,6 +12,9 @@ class CategoryCrawler(BaseCrawler):
         super().__init__(*args,**kwargs)
         
         proxy = random.choice(PROXY_LIST)
+        print(':::PROXY:::')
+        print(proxy)
+        print(':::PROXY:::')
         
         self.r.proxies = {
             'http' : 'http://'+proxy,
