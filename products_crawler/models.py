@@ -1,6 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Count, Q
+from urllib.parse import urlparse,parse_qs
 
 
 class BaseModel(models.Model):
@@ -27,14 +28,28 @@ class AliexpressCookie(BaseModel):
     def __str__(self):
         return ('<%s> - %s'%(str(self.cookies)[:30],self.updated_at))
     
+    
+    
 class Category(BaseModel):
     
     name        = models.CharField(max_length=500)
     url         = models.CharField(max_length=1000)
+    keyword     = models.CharField(max_length=100,blank=True,null=True)
 
+    def is_keyword(self):
+        return bool(self.keyword)
+    
     def valid_product_set(self):
         return self.product_set.all().annotate(lucky = Count('buyer', filter = Q(buyer__buyer_lucky=True)) )\
             .filter(lucky__gte =1)
+    
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        
+        self.url = 'https:' + self.url if self.url and self.url.startswith("//") else self.url
+        self.url = self.url.split('?')[0]
+
+        super().save(force_insert=False, force_update=False, using=None, update_fields=None)
+    
     
 class Product(BaseModel):
     

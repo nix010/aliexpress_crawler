@@ -30,13 +30,16 @@ class CategoryCrawler(BaseCrawler):
         print(reps.request.headers)
         print(reps.request.url)
         
-        # f = open('ali.html','w')
-        # f.write(reps.text)
-        # f.close()
+        f = open('ali.html','w')
+        f.write(reps.text)
+        f.close()
         tree = self.parser(reps.text)
 
         products = self._extract_products(tree)
         return products
+    
+    def _refactor_data(self,product):
+        return product
     
     def _extract_products(self,tree):
         
@@ -82,7 +85,9 @@ class CategoryCrawler(BaseCrawler):
                 'store_name'    :store,
                 'store_url'     :store_url,
             }
+            p = self._refactor_data(p)
             # print(p)
+
             products.append(p)
         
         return products

@@ -1,6 +1,8 @@
 from datetime import datetime, timezone, timedelta
+from urllib.parse import quote_plus
 
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.utils.timezone import now
 
 
 def back(request,url_name=None,**kwargs):
@@ -8,8 +10,6 @@ def back(request,url_name=None,**kwargs):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/' ))
 
 
-def now():
-    return datetime.now(timezone.utc)
 
 def parse_cookie_str(str):
     _c = str.split('; ')
@@ -34,6 +34,16 @@ def _paginator(items,item_per_page=10,page=1):
     except EmptyPage:
         _items = paginator.page(paginator.num_pages)
     return _items
+
+def prepare_cate_keyword_url(cate,page):
+    time_param = now().strftime('%Y%m%d%H%M%S')
+    url = 'https://www.aliexpress.com/wholesale?catId=0&initiative_id=AS_%s&SearchText=%s' % (time_param, quote_plus(cate.keyword))
+    return url
+
+def prepare_cate_url(cate,page):
+    url = cate.url
+    url = url.replace('.html', '/%s.html' % str(page + 1)) if page > 0 else url
+    return url
 
 def search_lucky_buyer(buyers):
     _buyers = buyers
