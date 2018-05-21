@@ -30,9 +30,6 @@ class CategoryCrawler(BaseCrawler):
         print(reps.request.headers)
         print(reps.request.url)
         
-        f = open('ali.html','w')
-        f.write(reps.text)
-        f.close()
         tree = self.parser(reps.text)
 
         products = self._extract_products(tree)
@@ -91,3 +88,8 @@ class CategoryCrawler(BaseCrawler):
             products.append(p)
         
         return products
+    
+    """
+    https://www.aliexpress.com/af/category/200216959.html?d=n&origin=n&blanktest=0&jump=afs&CatId=200216959&catName=phone-bags-cases&isViewCP=y
+    https://www.aliexpress.com/category/200216959/phone-bags-cases.html?tc=af&catName=phone-bags-cases&CatId=200216959&blanktest=0&jump=afs
+    """

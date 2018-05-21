@@ -7,7 +7,7 @@ from project.celery import app
 app.conf.beat_schedule = {
     'update_aliexpress_category': {
         'task': 'products_crawler.tasks.update_categories',
-        'schedule': 60*60,
+        'schedule': 2*60*60,
     },
 }
 
@@ -16,10 +16,10 @@ app.conf.beat_schedule = {
 def update_categories():
     from products_crawler.models import Category
     from django.db.models import Count
-    cates = Category.objects.all().annotate(product_count=Count('product')).order_by('-product_count')
+    cates = Category.objects.all().filter(keyword=None).annotate(product_count=Count('product')).order_by('-product_count')
     
     for idx,cate in enumerate(cates):
-        crawl_category.delay(cate.id, 20*idx)
+        crawl_category.delay(cate.id)
     
 @app.task
 def crawl_keyword_category(cate_id,sleep_time=0):
