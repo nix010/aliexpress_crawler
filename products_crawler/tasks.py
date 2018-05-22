@@ -37,10 +37,12 @@ def crawl_category(cate_id,sleep_time=0,url_function=None,crawler=None):
     from products_crawler.crawlers.category_crawler import CategoryCrawler
     
     print('cate_id')
+    print(cate_id)
     cate    = Category.objects.get(id=cate_id)
 
     if not crawler:
         crawler = CategoryCrawler
+        
     if not url_function:
         url_function = prepare_cate_url
 
