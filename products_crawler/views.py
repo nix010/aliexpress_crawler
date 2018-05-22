@@ -89,7 +89,7 @@ class CategoryView(TemplateView):
     def crawl_trigger(request, *args, **kwargs):
         category_id = kwargs.get('category_id')
         if request.GET.get('cate_type') == 'keyword':
-            crawl_keyword_category.delay(5)
+            crawl_keyword_category.delay(category_id)
         else:
             crawl_category.delay(category_id)
         return redirect(category_view)
