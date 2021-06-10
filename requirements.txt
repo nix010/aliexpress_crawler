@@ -12,7 +12,7 @@ chardet==3.0.4
 constantly==15.1.0
 cryptography==2.2.1
 cssselect==1.0.3
-Django==2.0.3
+Django==2.2.24
 django-constance==2.1.0
 facebook-sdk==2.0.0
 httplib2==0.11.3
